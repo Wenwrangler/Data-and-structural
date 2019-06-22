@@ -1,4 +1,4 @@
-#include<iostream>
+
 #include"head.h"
 using namespace std;
 int main() {
@@ -13,9 +13,21 @@ int main() {
 	setlinecolor(LIGHTGRAY);
 	int x = 100, y = 25;
 	char s[] = "Hello World";
-
-	for (int i = 1; i < 5; i++) {
-		for (int j = 1; j < 100; j++) {
+	ifstream open("excel.txt");
+	if (open.fail()) {
+		cout << "文件打开失败！";
+		return 0;
+	}
+	queue<MyStruct> q;
+	MyStruct temp;
+	for (int i = 0; i < 20; i++)  {
+		open >> temp.name >> temp.num >> temp.CourseNumber >> temp.results;
+		q.push(temp);
+	}
+	for (int j = 1; q.empty()!=1; j++) {
+		temp = q.front();
+		q.pop();
+		for (int i = 1; i < 5; i++) {
 			fillrectangle(256*i-256, j*50-50, 256 * i, 50*j);
 			setfillcolor(WHITE);
 			setlinecolor(LIGHTGRAY);
@@ -37,13 +49,25 @@ int main() {
 				}
 			}
 			else {
-				outtextxy(x+(i*256-256), y+(j*50-50), s);
+				switch (i) {
+					case 1:
+						outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.name);
+						break;
+					case 2:
+						outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.num);
+						break;
+					case 3:
+						outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.CourseNumber);
+						break;
+					case 4:
+						outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.results);
+						break;
+				}
 			}
 			
 		}
 	}
 	_getch();
 	
-	cout << "1";
 	return 0;
 }
