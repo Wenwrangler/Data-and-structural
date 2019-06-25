@@ -23,9 +23,12 @@ void GUImain() {
 		switch (m.uMsg)
 		{
 		case WM_LBUTTONDOWN:
-			if (m.x >= 1024 && m.x <= 1324 && m.y >= 0 && m.y <= 216) {
+			if (m.x >= 1024 && m.x <= 1324 && m.y >= 500 && m.y <= 750) {
 				cleardevice();
 				GUIcycle();
+			}
+			else if (m.x >= 1024 && m.x <= 1324 && m.y >= 0 && m.y <= 220) {
+
 			}
 		default:
 			break;
@@ -49,7 +52,6 @@ void GUIcycle() {
 			temp = q.front();
 			q.pop();
 		}
-
 		for (int i = 1; i < 5; i++) {
 			fillrectangle(256 * i - 256, j * 50 - 50, 256 * i, 50 * j);
 			setfillcolor(WHITE);
