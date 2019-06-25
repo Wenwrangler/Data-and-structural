@@ -5,6 +5,7 @@
 #include<iostream>
 #include<queue>
 #include<fstream>
+using namespace std;
 struct MyStruct
 {
 	char name[100];
@@ -12,3 +13,5 @@ struct MyStruct
 	char CourseNumber[100];
 	char results[100];
 };
+void GUImain();
+void GUIcycle();
