@@ -1,5 +1,5 @@
 #include"head.h"
-IMAGE t1, t2;
+IMAGE t1;
 vector<MyStruct> v;
 vector<MyStruct>::iterator it;
 MyStruct temp;
@@ -8,13 +8,13 @@ void GUImain() {
 	initgraph(1024 + 300, 750, SHOWCONSOLE);//初始化窗口
 	loadimage(&t1, _T("timg.png"));//读取图片
 	setlinecolor(LIGHTGRAY);
-	ifstream open("excel.txt");
-	if (open.fail()) {
+	ifstream input("excel.txt");
+	if (input.fail()) {
 		cout << "文件打开失败！";
 		return;
 	}
 	for (int i = 0; i < 100; i++) {
-		open >> temp.name >> temp.num >> temp.CourseNumber >> temp.results;
+		input >> temp.name >> temp.num >> temp.CourseNumber >> temp.results;
 		v.push_back(temp);
 	}
 	it = v.begin();
@@ -34,7 +34,8 @@ void GUImain() {
 				return;
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 192 && m.y <= 357) {//排序
-				
+				//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
+
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 0 && m.y <= 164) {//向上翻页 √
 				for (int i = 0; i < 28 && it != v.begin(); i++) {
