@@ -4,7 +4,9 @@
 #include<string.h>
 #include<iostream>
 #include<queue>
+#include<set>
 #include<fstream>
+#include<vector>
 using namespace std;
 struct MyStruct
 {
