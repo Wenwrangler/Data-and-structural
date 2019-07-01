@@ -2,6 +2,6 @@
 using namespace std;
 int main() {
 
-	GUImain();
+	GUI_Main();
 	return 0;
 }

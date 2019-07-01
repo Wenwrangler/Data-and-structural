@@ -11,12 +11,12 @@
 using namespace std;
 struct MyStruct
 {
-	string name;
-	string num;
+	string Name;
+	string Num;
 	string CourseNumber;
-	string results;
+	string Results;
 };
-void GUImain();
-void GUIcycle();
+void GUI_Main();
+void GUI_Show_Information();
 void GUI_Sort(vector<MyStruct>& Data);
 bool MyComp(const MyStruct& a, const MyStruct& b);

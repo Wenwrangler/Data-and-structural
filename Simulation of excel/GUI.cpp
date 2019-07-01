@@ -1,10 +1,10 @@
 #include"head.h"
 IMAGE t1;
-vector<MyStruct> v;
+vector<MyStruct> Data;
 vector<MyStruct>::iterator it;
-MyStruct temp;
+MyStruct Temp_Struct;
 int x = 100, y = 25;
-void GUImain() {
+void GUI_Main() {
 	initgraph(1024 + 300, 750, SHOWCONSOLE);//初始化窗口
 	loadimage(&t1, _T("timg.png"));//读取图片
 	setlinecolor(LIGHTGRAY);
@@ -14,67 +14,62 @@ void GUImain() {
 		return;
 	}
 	while (!input.eof()) {
-		input >> temp.name >> temp.num >> temp.CourseNumber >> temp.results;
-		v.push_back(temp);
+		input >> Temp_Struct.Name >> Temp_Struct.Num >> Temp_Struct.CourseNumber >> Temp_Struct.Results;
+		Data.push_back(Temp_Struct);
 	}
-	it = v.begin();
-	GUIcycle();
+	it = Data.begin();
+	GUI_Show_Information();
 	while (1) {
-		MOUSEMSG m;
-		m = GetMouseMsg();
-		switch (m.uMsg)
-		{
-		case WM_LBUTTONDOWN:
-			if (m.x >= 1160 && m.x <= 1324 && m.y >= 585 && m.y <= 750) {//向下翻页 √
-				cleardevice();
-				GUIcycle();
-			}
-			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 388 && m.y <= 553) {//退出 √
-				closegraph();
-				return;
-			}
-			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 192 && m.y <= 357) {//排序
-				//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
-				DWORD startTime = GetTickCount();//计时开始
-				GUI_Sort(v);
-				DWORD endTime = GetTickCount();//计时结束
-				
-				it = v.begin();
-				GUIcycle();
-				solidrectangle(1050, 1, 1130, 100);
-				settextcolor(BLACK);
-				string clock = "上次花费时间：";
-				char t_clock[100];
-				int clock_number = endTime - startTime;
-				sprintf_s(t_clock, "%d", clock_number);
-				clock += t_clock;
-				clock += "ms";
-				outtextxy(1025, 50, clock.c_str());
-				cout << "The run time is:" << endTime - startTime << "ms" << endl;
-
-			}
-			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 0 && m.y <= 164) {//向上翻页 √
-				for (int i = 0; i < 28 && it != v.begin(); i++) {
-					it--;
+		MOUSEMSG Mouse_Event;
+		Mouse_Event = GetMouseMsg();
+		switch (Mouse_Event.uMsg){
+			case WM_LBUTTONDOWN:
+				if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 585 && Mouse_Event.y <= 750) {//向下翻页 √
+					cleardevice();
+					GUI_Show_Information();
 				}
-				cleardevice();
-				GUIcycle();
-			}
-			break;
-		default:
-			break;
+				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 388 && Mouse_Event.y <= 553) {//退出 √
+					closegraph();
+					return;
+				}
+				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 192 && Mouse_Event.y <= 357) {//排序
+					//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
+					DWORD StartTime = GetTickCount();//计时开始
+					GUI_Sort(Data);//排序
+					DWORD EndTime = GetTickCount();//计时结束
+					it = Data.begin();
+					GUI_Show_Information();
+					solidrectangle(1050, 1, 1130, 100);
+					settextcolor(BLACK);
+					string Clock = "上次花费时间：";
+					char T_clock[100];
+					int Clock_Number = EndTime - StartTime;
+					sprintf_s(T_clock, "%d", Clock_Number);
+					Clock += T_clock;
+					Clock += "ms";
+					outtextxy(1025, 50, Clock.c_str());
+					cout << "The run time is:" << EndTime - StartTime << "ms" << endl;
+				}
+				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 0 && Mouse_Event.y <= 164) {//向上翻页 √
+					for (int i = 0; i < 28 && it != Data.begin(); i++) {
+						it--;
+					}
+					cleardevice();
+					GUI_Show_Information();
+				}
+				break;
+			default:
+				break;
 		}
 	}
 	return;
 }
-void GUIcycle() {  //展示信息
+void GUI_Show_Information() {  //展示信息
 	setfillstyle(BS_DIBPATTERN, NULL, &t1);
 	setbkcolor(WHITE);
 	fillrectangle(1024, 0, 1324, 750);
 	for (int i = 1; i < 5; i++) {
 		fillrectangle(256 * i - 256, 0, 256 * i, 50 );
-		//setfillcolor(WHITE);
-		//setlinecolor(LIGHTGRAY);
 		settextcolor(BLACK);
 		switch (i) {
 		case 1:
@@ -92,15 +87,15 @@ void GUIcycle() {  //展示信息
 		}
 	}
 	for (int j = 2; j <= 15; j++) {
-		if (it != v.end()) {
-			temp = *it;
+		if (it != Data.end()) {
+			Temp_Struct = *it;
 			it++;
 		}
 		else {
-			temp.CourseNumber = " ";
-			temp.name = " ";
-			temp.num = " ";
-			temp.results = " ";
+			Temp_Struct.CourseNumber = " ";
+			Temp_Struct.Name = " ";
+			Temp_Struct.Num = " ";
+			Temp_Struct.Results = " ";
 		}
 		for (int i = 1; i < 5; i++) {
 			fillrectangle(256 * i - 256, j * 50 - 50, 256 * i, 50 * j);
@@ -109,16 +104,16 @@ void GUIcycle() {  //展示信息
 			//settextcolor(BLACK);
 			switch (i) {
 			case 1:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.name.c_str());
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), Temp_Struct.Name.c_str());
 				break;
 			case 2:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.num.c_str());
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), Temp_Struct.Num.c_str());
 				break;
 			case 3:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.CourseNumber.c_str());
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), Temp_Struct.CourseNumber.c_str());
 				break;
 			case 4:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.results.c_str());
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), Temp_Struct.Results.c_str());
 				break;
 			}
 		}
