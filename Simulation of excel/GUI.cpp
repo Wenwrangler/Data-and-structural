@@ -35,9 +35,22 @@ void GUImain() {
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 192 && m.y <= 357) {//排序
 				//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
+				DWORD startTime = GetTickCount();//计时开始
 				GUI_Sort(v);
+				DWORD endTime = GetTickCount();//计时结束
+				
 				it = v.begin();
 				GUIcycle();
+				solidrectangle(1050, 1, 1130, 100);
+				settextcolor(BLACK);
+				string clock = "上次花费时间：";
+				char t_clock[100];
+				int clock_number = endTime - startTime;
+				sprintf_s(t_clock, "%d", clock_number);
+				clock += t_clock;
+				clock += "ms";
+				outtextxy(1025, 50, clock.c_str());
+				cout << "The run time is:" << endTime - startTime << "ms" << endl;
 
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 0 && m.y <= 164) {//向上翻页 √
@@ -60,8 +73,8 @@ void GUIcycle() {  //展示信息
 	fillrectangle(1024, 0, 1324, 750);
 	for (int i = 1; i < 5; i++) {
 		fillrectangle(256 * i - 256, 0, 256 * i, 50 );
-		setfillcolor(WHITE);
-		setlinecolor(LIGHTGRAY);
+		//setfillcolor(WHITE);
+		//setlinecolor(LIGHTGRAY);
 		settextcolor(BLACK);
 		switch (i) {
 		case 1:
@@ -92,8 +105,8 @@ void GUIcycle() {  //展示信息
 		for (int i = 1; i < 5; i++) {
 			fillrectangle(256 * i - 256, j * 50 - 50, 256 * i, 50 * j);
 			setfillcolor(WHITE);
-			setlinecolor(LIGHTGRAY);
-			settextcolor(BLACK);
+			//setlinecolor(LIGHTGRAY);
+			//settextcolor(BLACK);
 			switch (i) {
 			case 1:
 				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.name.c_str());

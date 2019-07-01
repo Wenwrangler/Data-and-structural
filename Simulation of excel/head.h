@@ -3,11 +3,11 @@
 #include<graphics.h>
 #include<string.h>
 #include<iostream>
-#include<queue>
-#include<set>
 #include<fstream>
 #include<vector>
 #include<algorithm>
+#include<Windows.h>
+#include <cstdio>
 using namespace std;
 struct MyStruct
 {
