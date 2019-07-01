@@ -7,13 +7,16 @@
 #include<set>
 #include<fstream>
 #include<vector>
+#include<algorithm>
 using namespace std;
 struct MyStruct
 {
-	char name[100];
-	char num[100];
-	char CourseNumber[100];
-	char results[100];
+	string name;
+	string num;
+	string CourseNumber;
+	string results;
 };
 void GUImain();
 void GUIcycle();
+void GUI_Sort(vector<MyStruct>& Data);
+bool MyComp(const MyStruct& a, const MyStruct& b);

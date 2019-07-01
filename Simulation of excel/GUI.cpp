@@ -13,7 +13,7 @@ void GUImain() {
 		cout << "文件打开失败！";
 		return;
 	}
-	for (int i = 0; i < 100; i++) {
+	while (!input.eof()) {
 		input >> temp.name >> temp.num >> temp.CourseNumber >> temp.results;
 		v.push_back(temp);
 	}
@@ -35,7 +35,9 @@ void GUImain() {
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 192 && m.y <= 357) {//排序
 				//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
-
+				GUI_Sort(v);
+				it = v.begin();
+				GUIcycle();
 
 			}
 			else if (m.x >= 1160 && m.x <= 1324 && m.y >= 0 && m.y <= 164) {//向上翻页 √
@@ -52,7 +54,7 @@ void GUImain() {
 	}
 	return;
 }
-void GUIcycle() {
+void GUIcycle() {  //展示信息
 	setfillstyle(BS_DIBPATTERN, NULL, &t1);
 	setbkcolor(WHITE);
 	fillrectangle(1024, 0, 1324, 750);
@@ -77,8 +79,16 @@ void GUIcycle() {
 		}
 	}
 	for (int j = 2; j <= 15; j++) {
-		temp = *it;
-		it++;
+		if (it != v.end()) {
+			temp = *it;
+			it++;
+		}
+		else {
+			temp.CourseNumber = " ";
+			temp.name = " ";
+			temp.num = " ";
+			temp.results = " ";
+		}
 		for (int i = 1; i < 5; i++) {
 			fillrectangle(256 * i - 256, j * 50 - 50, 256 * i, 50 * j);
 			setfillcolor(WHITE);
@@ -86,16 +96,16 @@ void GUIcycle() {
 			settextcolor(BLACK);
 			switch (i) {
 			case 1:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.name);
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.name.c_str());
 				break;
 			case 2:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.num);
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.num.c_str());
 				break;
 			case 3:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.CourseNumber);
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.CourseNumber.c_str());
 				break;
 			case 4:
-				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.results);
+				outtextxy(x + (i * 256 - 256), y + (j * 50 - 50), temp.results.c_str());
 				break;
 			}
 		}
