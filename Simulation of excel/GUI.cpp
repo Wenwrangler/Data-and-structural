@@ -191,6 +191,10 @@ out:
 void Save_information() {
 	ofstream output("excel.txt");
 	for (it = Data.begin(); it != Data.end(); it++) {
+		if ((it + 1) == Data.end()) {
+			output << (*it).Name << " " << (*it).Num << " " << (*it).CourseNumber << " " << (*it).Results;
+			break;
+		}
 		output << (*it).Name << " " << (*it).Num << " " << (*it).CourseNumber << " " << (*it).Results << endl;
 	}
 	output.close();
