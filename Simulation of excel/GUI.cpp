@@ -32,23 +32,8 @@ void GUI_Main() {
 					closegraph();
 					return;
 				}
-				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 192 && Mouse_Event.y <= 357) {//排序
-					//点击之后“排序方块”颜色变化，可以选择不同的序列来进行排序，最后再次点击排序完成
-					DWORD StartTime = GetTickCount();//计时开始
-					GUI_Sort(Data);//排序
-					DWORD EndTime = GetTickCount();//计时结束
-					it = Data.begin();
-					GUI_Show_Information();
-					solidrectangle(1050, 1, 1130, 100);
-					settextcolor(BLACK);
-					string Clock = "上次花费时间：";
-					char T_clock[100];
-					int Clock_Number = EndTime - StartTime;
-					sprintf_s(T_clock, "%d", Clock_Number);
-					Clock += T_clock;
-					Clock += "ms";
-					outtextxy(1025, 50, Clock.c_str());
-					cout << "The run time is:" << EndTime - StartTime << "ms" << endl;
+				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 192 && Mouse_Event.y <= 357) {//排序，点击排序后再点击各类排序
+					MySort();
 				}
 				else if (Mouse_Event.x >= 1160 && Mouse_Event.x <= 1324 && Mouse_Event.y >= 0 && Mouse_Event.y <= 164) {//向上翻页 √
 					for (int i = 0; i < 28 && it != Data.begin(); i++) {
@@ -57,8 +42,6 @@ void GUI_Main() {
 					cleardevice();
 					GUI_Show_Information();
 				}
-				break;
-			default:
 				break;
 		}
 	}
@@ -118,4 +101,97 @@ void GUI_Show_Information() {  //展示信息
 			}
 		}
 	}
+}
+MyStruct M[10000], MS[10000];
+void MySort() {
+	MOUSEMSG Mouse_Temp;
+	int i = 0;
+	for (it = Data.begin(); it != Data.end(); it++) {
+		M[i] = *it;
+		i++;
+	}
+	DWORD StartTime, EndTime;
+	int idx = 0;
+	while (1) {
+		Mouse_Temp = GetMouseMsg();
+		switch (Mouse_Temp.uMsg){
+			case WM_LBUTTONDOWN:
+				if (Mouse_Temp.x >= 1032 && Mouse_Temp.x <= 1140) {
+					if (Mouse_Temp.y >= 206 && Mouse_Temp.y <= 257) {//姓名优先
+						StartTime = GetTickCount();//计时开始
+						NameMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 283 && Mouse_Temp.y <= 335) {//学号优先
+						StartTime = GetTickCount();//计时开始
+						NumMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 358 && Mouse_Temp.y <= 412) {//课程编号优先
+						StartTime = GetTickCount();//计时开始
+						CourseNumberMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 435 && Mouse_Temp.y <= 490) {//成绩优先
+						StartTime = GetTickCount();//计时开始
+						ResultsMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 510 && Mouse_Temp.y <= 566) {//学号+成绩优先
+						StartTime = GetTickCount();//计时开始
+						Num_ResultsMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 587 && Mouse_Temp.y <= 642) {//姓名+成绩优先
+						StartTime = GetTickCount();//计时开始
+						Name_ResultsMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+					else if (Mouse_Temp.y >= 649 && Mouse_Temp.y <= 730) {//姓名+学号+成绩优先
+						StartTime = GetTickCount();//计时开始
+						Name_Num_ResultsMergeSort(M, MS, 0, i - 1, idx);
+						EndTime = GetTickCount();//计时结束
+						goto out;
+					}
+				}
+				break;
+		}
+
+	}
+out:
+	Data.clear();
+	for (int j = 0; j < i; j++) {
+		Data.push_back(M[j]);
+	}
+	it = Data.begin();
+	GUI_Show_Information();
+	solidrectangle(1050, 1, 1130, 100);
+	settextcolor(BLACK);
+	string Clock = "上次花费时间：";
+	char T_clock[100];
+	int Clock_Number = EndTime - StartTime;
+	sprintf_s(T_clock, "%d", Clock_Number);
+	Clock += T_clock;
+	Clock += "ms";
+	outtextxy(1025, 50, Clock.c_str());
+	char Compare_Number[10];
+	string CNumber="比较次数：";
+	sprintf_s(Compare_Number, "%d", idx);
+	CNumber += Compare_Number;
+	CNumber += "次";
+	outtextxy(1025, 70, CNumber.c_str());
+	
+}
+void Save_information() {
+	ofstream output("excel.txt");
+	for (it = Data.begin(); it != Data.end(); it++) {
+		output << (*it).Name << " " << (*it).Num << " " << (*it).CourseNumber << " " << (*it).Results << endl;
+	}
+	output.close();
 }
