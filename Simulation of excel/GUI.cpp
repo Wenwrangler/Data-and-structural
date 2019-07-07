@@ -111,7 +111,7 @@ void MySort() {
 		M[i] = *it;
 		i++;
 	}
-	
+	DWORD StartTime, EndTime;
 	int idx = 0;
 	while (1) {
 		Mouse_Temp = GetMouseMsg();
@@ -119,52 +119,45 @@ void MySort() {
 			case WM_LBUTTONDOWN:
 				if (Mouse_Temp.x >= 1032 && Mouse_Temp.x <= 1140) {
 					if (Mouse_Temp.y >= 206 && Mouse_Temp.y <= 257) {//姓名优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						NameMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 283 && Mouse_Temp.y <= 335) {//学号优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						NumMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 358 && Mouse_Temp.y <= 412) {//课程编号优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						CourseNumberMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 435 && Mouse_Temp.y <= 490) {//成绩优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						ResultsMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 510 && Mouse_Temp.y <= 566) {//学号+成绩优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						Num_ResultsMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 587 && Mouse_Temp.y <= 642) {//姓名+成绩优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						Name_ResultsMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 					else if (Mouse_Temp.y >= 649 && Mouse_Temp.y <= 730) {//姓名+学号+成绩优先
-						DWORD StartTime = GetTickCount();//计时开始
+						StartTime = GetTickCount();//计时开始
 						Name_Num_ResultsMergeSort(M, MS, 0, i - 1, idx);
-						DWORD EndTime = GetTickCount();//计时结束
-						Clock_Number = EndTime - StartTime;
+						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
 				}
@@ -173,6 +166,7 @@ void MySort() {
 
 	}
 out:
+	Clock_Number = EndTime - StartTime;
 	Data.clear();
 	for (int j = 0; j < i; j++) {
 		Data.push_back(M[j]);
@@ -194,6 +188,7 @@ out:
 	CNumber += Compare_Number;
 	CNumber += "次";
 	outtextxy(1025, 70, CNumber.c_str());
+	Beep(494, 500);
 	
 }
 void Save_information() {
