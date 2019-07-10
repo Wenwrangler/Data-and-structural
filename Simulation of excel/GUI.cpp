@@ -44,6 +44,7 @@ void GUI_Main() {
 				}
 				break;
 		}
+		//FlushMouseMsgBuffer();
 	}
 	return;
 }
@@ -103,8 +104,8 @@ void GUI_Show_Information() {  //展示信息
 	}
 }
 MyStruct M[10000], MS[10000];
-int Clock_Number;
 void MySort() {
+	int Clock_Number;
 	MOUSEMSG Mouse_Temp;
 	int i = 0;
 	for (it = Data.begin(); it != Data.end(); it++) {
@@ -120,7 +121,7 @@ void MySort() {
 				if (Mouse_Temp.x >= 1032 && Mouse_Temp.x <= 1140) {
 					if (Mouse_Temp.y >= 206 && Mouse_Temp.y <= 257) {//姓名优先
 						StartTime = GetTickCount();//计时开始
-						NameMergeSort(M, MS, 0, i - 1, idx);
+						NameMergeSort(M, MS, 0, i - 1, idx);                
 						EndTime = GetTickCount();//计时结束
 						goto out;
 					}
@@ -177,7 +178,6 @@ out:
 	settextcolor(BLACK);
 	string Clock = "上次花费时间：";
 	char T_clock[100];
-	
 	sprintf_s(T_clock, "%d", Clock_Number);
 	Clock += T_clock;
 	Clock += "ms";

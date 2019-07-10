@@ -12,10 +12,10 @@
 using namespace std;
 struct MyStruct
 {
-	string Name;
-	string Num;
-	string CourseNumber;
-	string Results;
+	string Name;                     //姓名
+	string Num;                      //学号
+	string CourseNumber;             //课程编号
+	string Results;                  //成绩
 };
 void GUI_Main();//可视化主函数
 void GUI_Show_Information();//展示文本信息
